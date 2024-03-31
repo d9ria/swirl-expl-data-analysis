@@ -1,0 +1,200 @@
+| As described, what does this process require?
+1: All of the others
+2: A number of clusters
+3: An initial guess as to cluster centroids
+4: A defined distance metric
+
+Selection: 1
+
+| Keep up the great work!
+
+  |=====================                                                                                                               |  16%
+| So k-means clustering requires some distance metric (say Euclidean), a hypothesized fixed number of clusters, and an initial guess as to
+| cluster centroids. As described, what does this process produce?
+
+1: A final estimate of cluster centroids
+2: An assignment of each point to a cluster
+3: All of the others
+
+Selection: 3
+
+| Perseverance, that's the answer.
+
+cmat
+     [,1] [,2] [,3]
+[1,]    1  1.8  2.5
+[2,]    2  1.0  1.5
+
+points(cx,cy,col=c("red","orange","purple"),pch=3,cex=2,lwd=2)
+| The distance between each point and one centroid means 12 distances have to be calculated for each centroid. This has to be done for all 3
+| centroids.
+
+1: 9
+2: 108
+3: 15
+4: 36
+
+Selection: 4
+
+| Excellent work!
+
+> mdist(x,y,cx,cy)
+         [,1]      [,2]      [,3]     [,4]      [,5]      [,6]      [,7]     [,8]      [,9]     [,10]     [,11]     [,12]
+[1,] 1.392885 0.9774614 0.7000680 1.264693 1.1894610 1.2458771 0.8113513 1.026750 4.5082665 4.5255617 4.8113368 4.0657750
+[2,] 1.108644 0.5544675 0.3768445 1.611202 0.8877373 0.7594611 0.7003994 2.208006 1.1825265 1.0540994 1.2278193 1.0090944
+[3,] 3.461873 2.3238956 1.7413021 4.150054 0.3297843 0.2600045 0.4887610 1.337896 0.3737554 0.4614472 0.5095428 0.2567247
+
+| All that hard work is paying off!
+
+| We've stored these distances in the matrix distTmp for you. Now we have to assign a cluster to each point. To do that we'll look at each
+| column and ?
+
+1: add up the 3 entries.
+2: pick the maximum entry
+3: pick the minimum entry
+
+Selection: 3
+
+| You are really on a roll!
+
+  |=============================================                                                                                       |  34%
+| From the distTmp entries, which cluster would point 6 be assigned to?
+
+1: none of the above
+2: 1
+3: 2
+4: 3
+
+Selection: 1
+
+| One more time. You can do it!
+
+| Which row in column 6 has the lowest value?
+
+1: 3
+2: 1
+3: 2
+4: none of the above
+
+Selection: 1
+
+| That's a job well done!
+
+> apply(distTmp,2,which.min)
+ [1] 2 2 2 1 3 3 3 1 3 3 3 3
+
+  points(x,y,pch=19,cex=2,col=cols1[newClust])
+  > tapply(x,newClust,mean)
+       1        2        3 
+1.210767 1.010320 2.498011 
+
+> tapply(y,newClust,mean)
+       1        2        3 
+1.730555 1.016513 1.354373 
+
+| Excellent job!
+
+points(newCx,newCy,col=cols1,pch=8,cex=2,lwd=2)
+
+> mdist(x,y,newCx,newCy)
+           [,1]        [,2]      [,3]      [,4]      [,5]      [,6]      [,7]     [,8]      [,9]    [,10]     [,11]     [,12]
+[1,] 0.98911875 0.539152725 0.2901879 1.0286979 0.7936966 0.8004956 0.4650664 1.028698 3.3053706 3.282778 3.5391512 2.9345445
+[2,] 0.09287262 0.002053041 0.0734304 0.2313694 1.9333732 1.8320407 1.4310971 2.926095 3.5224442 3.295301 3.5990955 3.2097944
+[3,] 3.28531180 2.197487387 1.6676725 4.0113796 0.4652075 0.3721778 0.6043861 1.643033 0.2586908 0.309730 0.3610747 0.1602755
+
+| Nice work!
+
+> apply(distTmp2,2,which.min)
+ [1] 2 2 2 2 3 3 1 1 3 3 3 3
+
+| Great job!
+points(x,y,pch=19,cex=2,col=cols1[newClust2])
+
+> tapply(x,newClust2,mean)
+        1         2         3 
+1.8878628 0.8904553 2.6001704 
+
+> tapply(y,newClust2,mean)
+       1        2        3 
+2.157866 1.006871 1.274675 
+
+| You are really on a roll!
+points(finalCx,finalCy,col=cols1,pch=9,cex=2,lwd=2)
+> kmeans(dataFrame,centers=3)
+K-means clustering with 3 clusters of sizes 4, 4, 4
+
+Cluster means:
+          x         y
+1 2.8534966 0.9831222
+2 1.9906904 2.0078229
+3 0.8904553 1.0068707
+
+Clustering vector:
+ [1] 3 3 3 3 2 2 2 2 1 1 1 1
+
+Within cluster sum of squares by cluster:
+[1] 0.03298027 0.34732441 0.34188313
+ (between_SS / total_SS =  93.6 %)
+
+Available components:
+
+[1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss" "betweenss"    "size"         "iter"         "ifault"      
+
+| That's correct!
+kmObj$iter
+plot(x,y,col=kmObj$cluster,pch=19,cex=2)
+points(kmObj$centers,col=c("black","red","green"),pch=3,cex=3,lwd=3)
+plot(x,y,col=kmeans(dataFrame,6)$cluster,pch=19,cex=2)
+| True or False? K-means clustering requires you to specify a number of clusters before you begin.
+
+1: True
+2: False
+
+Selection: 1
+
+| All that hard work is paying off!
+
+  |=======================================================================================================================             |  90%
+| True or False? K-means clustering requires you to specify a number of iterations before you begin.
+
+1: True
+2: False
+
+Selection: 2
+
+| You are really on a roll!
+
+  |=========================================================================================================================           |  92%
+| True or False? Every data set has a single fixed number of clusters.
+
+1: True
+2: False
+
+Selection: 3
+Enter an item from the menu, or 0 to exit
+Selection: 2
+
+| You are quite good my friend!
+
+  |============================================================================================================================        |  94%
+| True or False? K-means clustering will always stop in 3 iterations
+
+1: True
+2: False
+
+Selection: 2
+
+| All that hard work is paying off!
+
+  |===============================================================================================================================     |  96%
+| True or False? When starting kmeans with random centroids, you'll always end up with the same final clustering.
+
+1: False
+2: True
+
+Selection: 1
+
+| Excellent work!
+
+  |=================================================================================================================================   |  98%
+| Congratulations! We hope this means you found this lesson oK.
